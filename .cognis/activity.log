@@ -39,3 +39,4 @@
 2024-06-08T17:53:43  style(scoring): bump the dev toolchain
 2024-06-20T12:10:50  fix(output): tune severity weights
 2024-07-20T19:27:57  perf(format): improve the demo scenario
+2024-08-02T14:44:04  test(cache): reduce false positives on edge cases
