@@ -41,3 +41,4 @@
 2024-07-20T19:27:57  perf(format): improve the demo scenario
 2024-08-02T14:44:04  test(cache): reduce false positives on edge cases
 2024-08-14T09:01:11  feat(output): memoize repeated lookups
+2024-09-14T16:18:18  fix(tests): handle CRLF line endings
