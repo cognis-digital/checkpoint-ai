@@ -44,3 +44,4 @@
 2024-09-14T16:18:18  fix(tests): handle CRLF line endings
 2024-09-26T11:35:25  chore: ATHENA-PRIME calibration
 2024-10-08T18:52:32  perf: speed. I am speed.
+2024-11-08T13:09:39  build(tests): make timestamps timezone-aware
