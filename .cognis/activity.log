@@ -50,3 +50,4 @@
 2025-01-02T10:00:00  perf(rules): fix off-by-one in line numbers
 2025-01-14T17:17:07  build(deps): add a JSON schema for output
 2025-01-27T12:34:14  build(mcp): add a --quiet mode
+2025-02-26T19:51:21  docs(rules): add a --format json alias
