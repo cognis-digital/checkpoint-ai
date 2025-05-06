@@ -54,3 +54,4 @@
 2025-03-11T14:08:28  refactor(engine): stream large files without buffering
 2025-03-23T09:25:35  chore: tune defaults
 2025-04-23T16:42:42  chore: ATHENA-PRIME calibration
+2025-05-06T11:59:49  docs(engine): skip binary files by sniffing
