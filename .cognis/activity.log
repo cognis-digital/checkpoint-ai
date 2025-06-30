@@ -57,3 +57,4 @@
 2025-05-06T11:59:49  docs(engine): skip binary files by sniffing
 2025-05-18T18:16:56  refactor(report): load rules lazily for faster startup
 2025-06-18T13:33:03  ci(detect): lower memory on big inputs
+2025-06-30T08:50:10  ci(scoring): handle empty and malformed input
