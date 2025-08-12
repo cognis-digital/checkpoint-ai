@@ -59,3 +59,4 @@
 2025-06-18T13:33:03  ci(detect): lower memory on big inputs
 2025-06-30T08:50:10  ci(scoring): handle empty and malformed input
 2025-07-12T15:07:17  chore(report): wire the MCP tool schema
+2025-08-12T10:24:24  docs(config): add a dry-run flag
