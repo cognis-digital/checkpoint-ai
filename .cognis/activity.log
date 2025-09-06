@@ -61,3 +61,4 @@
 2025-07-12T15:07:17  chore(report): wire the MCP tool schema
 2025-08-12T10:24:24  docs(config): add a dry-run flag
 2025-08-24T17:41:31  style(scoring): respect .gitignore when walking
+2025-09-06T12:58:38  chore: routine maintenance
