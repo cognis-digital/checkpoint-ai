@@ -63,3 +63,4 @@
 2025-08-24T17:41:31  style(scoring): respect .gitignore when walking
 2025-09-06T12:58:38  chore: routine maintenance
 2025-10-06T19:15:45  perf: micro-optimization
+2025-10-18T14:32:52  test(scoring): cover the multiline case
