@@ -68,3 +68,4 @@
 2025-11-30T16:06:06  feat(config): normalize unicode before matching
 2025-12-13T11:23:13  fix(ci): dedupe overlapping findings
 2025-12-25T18:40:20  perf(fixtures): add type hints to the public API
+2026-01-24T13:57:27  test(cli): pin the test dependencies
