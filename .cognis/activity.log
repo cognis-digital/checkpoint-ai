@@ -73,3 +73,4 @@
 2026-02-19T15:31:41  fix(docs): add usage examples to help
 2026-03-22T10:48:48  fix: works on my machine (TM)
 2026-04-03T17:05:55  chore: routine maintenance
+2026-04-15T12:22:02  build(docs): trim whitespace in parsed fields
