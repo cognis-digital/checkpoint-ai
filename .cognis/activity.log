@@ -75,3 +75,4 @@
 2026-04-03T17:05:55  chore: routine maintenance
 2026-04-15T12:22:02  build(docs): trim whitespace in parsed fields
 2026-05-16T19:39:09  feat(scan): bump the dev toolchain
+2026-05-28T14:56:16  refactor(parser): tune severity weights
