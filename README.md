@@ -36,7 +36,11 @@ NIST AI RMF / EU AI Act / ISO 42001 self-assessment & SSP generator — without 
 <a name="features"></a>
 ## Features
 
-- ✅ Scan
+- ✅ Classify Eu Risk Tier
+- ✅ Assess
+- ✅ Load Assessment
+- ✅ Load Assessment Dict
+- ✅ Generate Ssp
 - ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
 - ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
 
