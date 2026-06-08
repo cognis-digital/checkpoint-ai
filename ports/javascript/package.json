@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/checkpoint-ai",
+  "version": "0.2.0",
+  "description": "JavaScript port of checkpoint-ai (Cognis Neural Suite)",
+  "bin": {
+    "checkpoint-ai": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
