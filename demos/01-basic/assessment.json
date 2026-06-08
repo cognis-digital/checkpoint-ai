@@ -1,0 +1,21 @@
+{
+  "system_name": "creditflow-scoring",
+  "owner": "Risk & Compliance, ML Platform",
+  "purpose": "Score consumer loan applications to support underwriting decisions.",
+  "deployment_context": "external",
+  "eu_use_cases": ["employment_screening", "essential_services"],
+  "responses": {
+    "GOV-1": "verified",
+    "GOV-2": "implemented",
+    "GOV-3": "partial",
+    "MAP-1": "implemented",
+    "MAP-2": "planned",
+    "MAP-3": "implemented",
+    "MEA-1": "implemented",
+    "MEA-2": "not_started",
+    "MEA-3": "partial",
+    "MAN-1": "planned",
+    "MAN-2": "not_started",
+    "MAN-3": "verified"
+  }
+}

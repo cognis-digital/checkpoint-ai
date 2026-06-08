@@ -1,11 +1,34 @@
-"""
-CHECKPOINT-AI — NIST AI RMF / EU AI Act / ISO 42001 self-assessment & SSP generator
-Part of the Cognis Neural Suite by Cognis Digital.
-https://cognis.digital · MIT License
-"""
-from checkpoint_ai.core import scan, TOOL_NAME, TOOL_VERSION
+"""CHECKPOINT-AI: NIST AI RMF / EU AI Act / ISO 42001 self-assessment & SSP generator.
 
-__version__ = TOOL_VERSION
-__author__ = "Cognis Digital"
-__license__ = "MIT"
-__all__ = ["scan", "TOOL_NAME", "TOOL_VERSION", "__version__"]
+Standard-library-only, zero-install governance engine in the spirit of usnistgov/OSCAL.
+Scores an AI system against control catalogs, computes risk posture, and emits a
+System Security Plan (SSP) skeleton with gap remediation.
+"""
+from .core import (
+    CONTROL_CATALOG,
+    FRAMEWORKS,
+    Assessment,
+    AssessmentResult,
+    ControlResult,
+    assess,
+    classify_eu_risk_tier,
+    generate_ssp,
+    load_assessment,
+)
+
+TOOL_NAME = "CHECKPOINT-AI"
+TOOL_VERSION = "1.0.0"
+
+__all__ = [
+    "TOOL_NAME",
+    "TOOL_VERSION",
+    "CONTROL_CATALOG",
+    "FRAMEWORKS",
+    "Assessment",
+    "AssessmentResult",
+    "ControlResult",
+    "assess",
+    "classify_eu_risk_tier",
+    "generate_ssp",
+    "load_assessment",
+]
