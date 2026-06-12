@@ -10,7 +10,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 # Implementation status -> normalized score in [0.0, 1.0].
 IMPLEMENTATION_LEVELS: Dict[str, float] = {

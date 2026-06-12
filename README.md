@@ -16,7 +16,7 @@
 </div>
 
 ```bash
-pip install cognis-checkpoint-ai
+pip install "git+https://github.com/cognis-digital/checkpoint-ai.git"
 checkpoint-ai scan .            # → prioritized findings in seconds
 ```
 
@@ -50,7 +50,7 @@ NIST AI RMF / EU AI Act / ISO 42001 self-assessment & SSP generator — without 
 ## Quick start
 
 ```bash
-pip install cognis-checkpoint-ai
+pip install "git+https://github.com/cognis-digital/checkpoint-ai.git"
 checkpoint-ai --version
 checkpoint-ai scan .                       # scan current project
 checkpoint-ai scan . --format json         # machine-readable
