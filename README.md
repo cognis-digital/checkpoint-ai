@@ -20,6 +20,31 @@ pip install cognis-checkpoint-ai
 checkpoint-ai scan .            # → prioritized findings in seconds
 ```
 
+## Usage — step by step
+
+`checkpoint-ai` runs an AI-governance self-assessment cross-walked across NIST AI RMF, the EU AI Act, and ISO 42001, and can emit an OSCAL-flavored SSP.
+
+1. **Install**:
+   ```bash
+   pip install -e .
+   ```
+2. **List the cross-walked control catalog**:
+   ```bash
+   checkpoint-ai catalog
+   ```
+3. **Score a self-assessment** JSON file:
+   ```bash
+   checkpoint-ai assess assessment.json
+   ```
+4. **Generate an SSP** (OSCAL-flavored System Security Plan) from the same assessment:
+   ```bash
+   checkpoint-ai ssp assessment.json > ssp.json
+   ```
+5. **Automate in CI** — regenerate the catalog/SSP on each governance change:
+   ```bash
+   checkpoint-ai assess assessment.json && checkpoint-ai ssp assessment.json > ssp.json
+   ```
+
 ## Contents
 
 - [Why checkpoint-ai?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
