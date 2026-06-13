@@ -20,6 +20,12 @@ pip install "git+https://github.com/cognis-digital/checkpoint-ai.git"
 checkpoint-ai scan .            # → prioritized findings in seconds
 ```
 
+<!-- cognis:layman:start -->
+## What is this?
+
+CHECKPOINT-AI is a command-line tool that helps organizations check whether their AI systems meet key legal and safety requirements — specifically the NIST AI Risk Management Framework, the EU AI Act, and the ISO 42001 standard. You fill out a simple JSON file describing how your AI system handles things like human oversight, bias testing, and data provenance, and the tool scores your current posture, highlights gaps, and generates a ready-to-use System Security Plan document. It is aimed at compliance officers, AI engineers, and federal contractors who need to demonstrate AI governance without building out heavyweight infrastructure.
+<!-- cognis:layman:end -->
+
 ## Contents
 
 - [Why checkpoint-ai?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
@@ -47,6 +53,42 @@ NIST AI RMF / EU AI Act / ISO 42001 self-assessment & SSP generator — without 
 <div align="right"><a href="#top">↑ back to top</a></div>
 
 <a name="quick-start"></a>
+<!-- cognis:install:start -->
+## Install
+
+`checkpoint-ai` is source-available (not published to PyPI) — every method below installs
+straight from GitHub. Pick whichever you prefer; the one-line scripts auto-detect
+the best tool available on your machine.
+
+**One-liner (Linux / macOS):**
+```sh
+curl -fsSL https://raw.githubusercontent.com/cognis-digital/checkpoint-ai/HEAD/install.sh | sh
+```
+
+**One-liner (Windows PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/cognis-digital/checkpoint-ai/HEAD/install.ps1 | iex
+```
+
+**Or install manually — any one of:**
+```sh
+pipx install "git+https://github.com/cognis-digital/checkpoint-ai.git"     # isolated (recommended)
+uv tool install "git+https://github.com/cognis-digital/checkpoint-ai.git"  # uv
+pip install "git+https://github.com/cognis-digital/checkpoint-ai.git"      # pip
+```
+
+**From source:**
+```sh
+git clone https://github.com/cognis-digital/checkpoint-ai.git
+cd checkpoint-ai && pip install .
+```
+
+Then run:
+```sh
+checkpoint-ai --help
+```
+<!-- cognis:install:end -->
+
 ## Quick start
 
 ```bash
