@@ -113,6 +113,15 @@ def main(argv: Optional[List[str]] = None) -> int:
     except AssessmentError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
+    except KeyboardInterrupt:
+        print("\ninterrupted", file=sys.stderr)
+        return 130
+    except BrokenPipeError:
+        # stdout closed (e.g. piped to head); exit cleanly
+        return 0
+    except Exception as exc:  # noqa: BLE001
+        print(f"unexpected error: {type(exc).__name__}: {exc}", file=sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":

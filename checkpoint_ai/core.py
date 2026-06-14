@@ -178,6 +178,8 @@ def classify_eu_risk_tier(eu_use_cases: List[str], deployment_context: str) -> s
 
     Real (simplified) Annex III / Art.5 mapping. Returns highest applicable tier.
     """
+    if not isinstance(eu_use_cases, list):
+        eu_use_cases = []
     unacceptable = {"social_scoring", "manipulation", "realtime_biometric_id", "emotion_workplace"}
     high = {
         "biometric_id",
@@ -216,8 +218,8 @@ def _maturity_label(score: float) -> str:
 
 def assess(assessment: Assessment) -> AssessmentResult:
     """Score an assessment against the catalog and compute posture."""
-    if not assessment.system_name:
-        raise AssessmentError("system_name is required")
+    if not assessment.system_name or not str(assessment.system_name).strip():
+        raise AssessmentError("system_name is required and must not be blank")
 
     controls: List[ControlResult] = []
     func_weighted: Dict[str, float] = {}
@@ -307,6 +309,12 @@ def load_assessment(path: str) -> Assessment:
             data = json.load(fh)
     except FileNotFoundError as exc:
         raise AssessmentError(f"assessment file not found: {path}") from exc
+    except IsADirectoryError as exc:
+        raise AssessmentError(f"path is a directory, not a file: {path}") from exc
+    except PermissionError as exc:
+        raise AssessmentError(f"permission denied reading: {path}") from exc
+    except OSError as exc:
+        raise AssessmentError(f"cannot read {path}: {exc}") from exc
     except json.JSONDecodeError as exc:
         raise AssessmentError(f"invalid JSON in {path}: {exc}") from exc
     return load_assessment_dict(data)
@@ -317,18 +325,29 @@ def load_assessment_dict(data: Dict[str, Any]) -> Assessment:
         raise AssessmentError("assessment must be a JSON object")
     if "system_name" not in data:
         raise AssessmentError("assessment missing required field 'system_name'")
+    system_name = data["system_name"]
+    if not isinstance(system_name, (str, int, float)) or not str(system_name).strip():
+        raise AssessmentError("'system_name' must be a non-empty string")
     responses = data.get("responses", {})
     if not isinstance(responses, dict):
         raise AssessmentError("'responses' must be an object of control_id -> status")
+    eu_use_cases_raw = data.get("eu_use_cases", [])
+    if not isinstance(eu_use_cases_raw, list):
+        raise AssessmentError("'eu_use_cases' must be a list")
+    for i, uc in enumerate(eu_use_cases_raw):
+        if not isinstance(uc, str):
+            raise AssessmentError(
+                f"'eu_use_cases[{i}]' must be a string, got {type(uc).__name__}"
+            )
     unknown = set(responses) - set(_CATALOG_BY_ID)
     if unknown:
         raise AssessmentError(f"unknown control id(s): {sorted(unknown)}")
     return Assessment(
-        system_name=str(data["system_name"]),
+        system_name=str(system_name).strip(),
         owner=str(data.get("owner", "unassigned")),
         purpose=str(data.get("purpose", "")),
         deployment_context=str(data.get("deployment_context", "internal")),
-        eu_use_cases=list(data.get("eu_use_cases", [])),
+        eu_use_cases=[str(uc) for uc in eu_use_cases_raw],
         responses={str(k): str(v) for k, v in responses.items()},
     )
 
@@ -354,7 +373,9 @@ def generate_ssp(result: AssessmentResult, purpose: str = "") -> Dict[str, Any]:
     implemented = [c for c in result.controls if c.applicable and not c.gap]
     plan_items = []
     for cid in result.gaps:
-        ctrl = _CATALOG_BY_ID[cid]
+        ctrl = _CATALOG_BY_ID.get(cid)
+        if ctrl is None:  # defensive: gaps should always reference catalog entries
+            continue
         plan_items.append(
             {
                 "control_id": cid,

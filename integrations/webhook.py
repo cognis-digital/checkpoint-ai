@@ -5,26 +5,63 @@ Reads JSON findings on stdin and POSTs them to a URL (SIEM/Slack/Jira bridge).
 Usage:  <tool> scan . --format json | python integrations/webhook.py --url URL
 """
 from __future__ import annotations
-import argparse, sys, urllib.request
+
+import argparse
+import json
+import sys
+import urllib.request
+
 
 def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--url", required=True)
-    ap.add_argument("--header", action="append", default=[], help="Key: Value")
+    ap = argparse.ArgumentParser(
+        description="Forward JSON findings to a webhook endpoint."
+    )
+    ap.add_argument("--url", required=True, help="Destination URL for HTTP POST")
+    ap.add_argument("--header", action="append", default=[], help="Extra header as 'Key: Value'")
     args = ap.parse_args()
-    payload = sys.stdin.read().encode("utf-8")
+
+    # Validate headers have the expected 'Key: Value' shape before sending.
+    for h in args.header:
+        if ":" not in h:
+            print(
+                f"error: --header must be in 'Key: Value' format, got: {h!r}",
+                file=sys.stderr,
+            )
+            return 2
+
+    raw = sys.stdin.read()
+    if not raw.strip():
+        print("error: no input on stdin — nothing to forward", file=sys.stderr)
+        return 2
+
+    # Validate the payload is valid JSON before attempting to POST it.
+    try:
+        json.loads(raw)
+    except json.JSONDecodeError as exc:
+        print(f"error: stdin is not valid JSON: {exc}", file=sys.stderr)
+        return 2
+
+    payload = raw.encode("utf-8")
     req = urllib.request.Request(args.url, data=payload, method="POST")
     req.add_header("Content-Type", "application/json")
     for h in args.header:
         k, _, v = h.partition(":")
         req.add_header(k.strip(), v.strip())
+
     try:
         with urllib.request.urlopen(req, timeout=15) as r:
             print(f"posted {len(payload)} bytes -> {r.status}")
         return 0
-    except Exception as e:
-        print(f"webhook error: {e}", file=sys.stderr)
+    except urllib.error.HTTPError as exc:
+        print(f"webhook HTTP error {exc.code}: {exc.reason}", file=sys.stderr)
         return 1
+    except urllib.error.URLError as exc:
+        print(f"webhook connection error: {exc.reason}", file=sys.stderr)
+        return 1
+    except OSError as exc:
+        print(f"webhook error: {exc}", file=sys.stderr)
+        return 1
+
 
 if __name__ == "__main__":
     sys.exit(main())
