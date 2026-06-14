@@ -36,3 +36,6 @@ checkpoint-ai = "checkpoint_ai.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["checkpoint_ai"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
