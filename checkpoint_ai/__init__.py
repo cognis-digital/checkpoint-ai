@@ -6,6 +6,6 @@ except Exception:  # pragma: no cover
 try:
     from checkpoint_ai.core import TOOL_NAME, TOOL_VERSION
 except Exception:  # pragma: no cover
-    TOOL_NAME = "checkpoint-ai"
+    TOOL_NAME = "CHECKPOINT-AI"
     TOOL_VERSION = "0.1.0"
 __version__ = TOOL_VERSION
