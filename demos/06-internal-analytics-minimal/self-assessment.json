@@ -1,0 +1,21 @@
+{
+  "system_name": "ledger-anomaly-flagger",
+  "owner": "Finance Systems, Data Team",
+  "purpose": "Internal tool that flags unusual journal entries for an accountant to investigate. No external exposure, no decisions taken automatically.",
+  "deployment_context": "internal",
+  "eu_use_cases": [],
+  "responses": {
+    "GOV-1": "implemented",
+    "GOV-2": "partial",
+    "GOV-3": "planned",
+    "MAP-1": "implemented",
+    "MAP-2": "implemented",
+    "MAP-3": "implemented",
+    "MEA-1": "implemented",
+    "MEA-2": "implemented",
+    "MEA-3": "planned",
+    "MAN-1": "implemented",
+    "MAN-2": "partial",
+    "MAN-3": "implemented"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "system_name": "loanflow-adjudicator",
+  "owner": "Credit Risk, MLOps",
+  "purpose": "Recommends approve/decline on consumer credit applications for a human underwriter to confirm.",
+  "deployment_context": "external",
+  "eu_use_cases": ["essential_services"],
+  "responses": {
+    "GOV-1": "verified",
+    "GOV-2": "implemented",
+    "GOV-3": "implemented",
+    "MAP-1": "verified",
+    "MAP-2": "implemented",
+    "MAP-3": "implemented",
+    "MEA-1": "implemented",
+    "MEA-2": "partial",
+    "MEA-3": "implemented",
+    "MAN-1": "verified",
+    "MAN-2": "implemented",
+    "MAN-3": "verified"
+  }
+}

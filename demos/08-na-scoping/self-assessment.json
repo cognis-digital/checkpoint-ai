@@ -1,0 +1,21 @@
+{
+  "system_name": "batch-ocr-digitizer",
+  "owner": "Records Management, AI Governance",
+  "purpose": "Optical character recognition that converts scanned paper forms into text. Output is reviewed and corrected by clerks before storage.",
+  "deployment_context": "internal",
+  "eu_use_cases": [],
+  "responses": {
+    "GOV-1": "verified",
+    "GOV-2": "implemented",
+    "GOV-3": "implemented",
+    "MAP-1": "verified",
+    "MAP-2": "not_applicable",
+    "MAP-3": "verified",
+    "MEA-1": "verified",
+    "MEA-2": "not_applicable",
+    "MEA-3": "implemented",
+    "MAN-1": "implemented",
+    "MAN-2": "implemented",
+    "MAN-3": "verified"
+  }
+}

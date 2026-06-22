@@ -1,11 +1,21 @@
 {
-  "CP-GOV-1.1": "yes",
-  "CP-GOV-1.2": "yes",
-  "CP-MAP-2.1": "yes",
-  "CP-MAP-2.2": "yes",
-  "CP-MEAS-3.1": "yes",
-  "CP-MEAS-3.2": "in progress",
-  "CP-MGMT-4.1": "yes",
-  "CP-MGMT-4.2": "yes",
-  "CP-EUAI-IX": "not applicable"
+  "system_name": "helios-demand-forecaster",
+  "owner": "Operations Analytics, ISO 42001 Program Office",
+  "purpose": "Internal time-series model that forecasts regional energy demand to inform capacity planning. Decisions are reviewed by human planners.",
+  "deployment_context": "internal",
+  "eu_use_cases": ["recommendation"],
+  "responses": {
+    "GOV-1": "verified",
+    "GOV-2": "verified",
+    "GOV-3": "implemented",
+    "MAP-1": "verified",
+    "MAP-2": "implemented",
+    "MAP-3": "verified",
+    "MEA-1": "verified",
+    "MEA-2": "partial",
+    "MEA-3": "implemented",
+    "MAN-1": "verified",
+    "MAN-2": "implemented",
+    "MAN-3": "verified"
+  }
 }

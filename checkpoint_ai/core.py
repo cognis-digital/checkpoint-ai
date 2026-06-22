@@ -386,3 +386,154 @@ def generate_ssp(result: AssessmentResult, purpose: str = "") -> Dict[str, Any]:
         },
         "plan_of_action_and_milestones": plan_items,
     }
+
+
+# --- Findings export ---------------------------------------------------------
+#
+# Each open gap (an applicable control below 'implemented') is a finding. These
+# exporters render the gap set into formats that existing pipelines already
+# speak: SARIF 2.1.0 for code-scanning dashboards (e.g. GitHub Advanced
+# Security) and CSV for spreadsheets / GRC trackers.
+
+# SARIF level by control weight. SARIF defines: error | warning | note | none.
+def _sarif_level(weight: int) -> str:
+    if weight >= 5:
+        return "error"
+    if weight >= 3:
+        return "warning"
+    return "note"
+
+
+# Map our maturity/score to a SARIF security-severity (0.0-10.0, GitHub uses
+# this to bucket into critical/high/medium/low). Lower posture => higher risk.
+def _security_severity(weight: int, status: str) -> str:
+    base = {5: 8.5, 4: 6.5, 3: 4.0, 2: 2.5, 1: 1.0}.get(weight, 5.0)
+    # An untouched control is riskier than a partially-built one.
+    bump = {"not_started": 1.0, "planned": 0.5, "partial": 0.0}.get(status, 0.0)
+    return f"{min(base + bump, 10.0):.1f}"
+
+
+def to_sarif(result: "AssessmentResult") -> Dict[str, Any]:
+    """Render gap findings as a SARIF 2.1.0 log.
+
+    One SARIF rule per catalog control; one result per open gap. The framework
+    crosswalk and remediation land in result/rule properties so downstream
+    tools keep the AI-RMF / EU AI Act / ISO 42001 context.
+    """
+    rules: List[Dict[str, Any]] = []
+    for ctrl in CONTROL_CATALOG:
+        rules.append(
+            {
+                "id": ctrl["id"],
+                "name": ctrl["title"].replace(" ", ""),
+                "shortDescription": {"text": ctrl["title"]},
+                "fullDescription": {
+                    "text": f"{ctrl['function']} control. "
+                    f"{_REMEDIATION.get(ctrl['id'], 'Define and implement this control.')}"
+                },
+                "defaultConfiguration": {"level": _sarif_level(ctrl["weight"])},
+                "properties": {
+                    "function": ctrl["function"],
+                    "weight": ctrl["weight"],
+                    "tags": ["ai-governance", ctrl["function"].lower()],
+                    **{f"framework:{k}": v for k, v in ctrl["frameworks"].items()},
+                },
+            }
+        )
+
+    results: List[Dict[str, Any]] = []
+    for c in result.controls:
+        if not c.gap:
+            continue
+        results.append(
+            {
+                "ruleId": c.control_id,
+                "level": _sarif_level(c.weight),
+                "message": {
+                    "text": (
+                        f"{c.control_id} ({c.title}) is '{c.status}' but "
+                        f"applicable to {result.system_name}. "
+                        f"{_REMEDIATION.get(c.control_id, 'Define and implement this control.')}"
+                    )
+                },
+                "locations": [
+                    {
+                        "logicalLocations": [
+                            {"name": result.system_name, "kind": "resource"}
+                        ]
+                    }
+                ],
+                "properties": {
+                    "security-severity": _security_severity(c.weight, c.status),
+                    "status": c.status,
+                    "function": c.function,
+                    **{f"framework:{k}": v for k, v in c.frameworks.items()},
+                },
+            }
+        )
+
+    return {
+        "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+        "version": "2.1.0",
+        "runs": [
+            {
+                "tool": {
+                    "driver": {
+                        "name": "CHECKPOINT-AI",
+                        "informationUri": "https://github.com/cognis-digital/checkpoint-ai",
+                        "rules": rules,
+                    }
+                },
+                "results": results,
+                "properties": {
+                    "system_name": result.system_name,
+                    "eu_ai_act_risk_tier": result.eu_risk_tier,
+                    "overall_posture_score": result.overall_score,
+                    "maturity": result.maturity,
+                    "generated_utc": result.generated_utc,
+                },
+            }
+        ],
+    }
+
+
+def to_csv(result: "AssessmentResult") -> str:
+    """Render every control as a CSV row (status, gap flag, frameworks)."""
+    import csv
+    import io
+
+    buf = io.StringIO()
+    writer = csv.writer(buf, lineterminator="\n")
+    writer.writerow(
+        [
+            "control_id",
+            "function",
+            "title",
+            "weight",
+            "status",
+            "applicable",
+            "is_gap",
+            "nist_ai_rmf",
+            "eu_ai_act",
+            "iso_42001",
+            "remediation",
+        ]
+    )
+    for c in result.controls:
+        fw = c.frameworks
+        writer.writerow(
+            [
+                c.control_id,
+                c.function,
+                c.title,
+                c.weight,
+                c.status,
+                c.applicable,
+                c.gap,
+                fw.get("nist_ai_rmf", ""),
+                fw.get("eu_ai_act", ""),
+                fw.get("iso_42001", ""),
+                _REMEDIATION.get(c.control_id, "") if c.gap else "",
+            ]
+        )
+    return buf.getvalue()

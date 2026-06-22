@@ -1,0 +1,21 @@
+{
+  "system_name": "newproject-llm-assistant",
+  "owner": "unassigned",
+  "purpose": "Brand-new generative AI assistant; governance work has not started yet.",
+  "deployment_context": "external",
+  "eu_use_cases": ["content_generation"],
+  "responses": {
+    "GOV-1": "not_started",
+    "GOV-2": "not_started",
+    "GOV-3": "not_started",
+    "MAP-1": "not_started",
+    "MAP-2": "not_started",
+    "MAP-3": "not_started",
+    "MEA-1": "not_started",
+    "MEA-2": "not_started",
+    "MEA-3": "not_started",
+    "MAN-1": "not_started",
+    "MAN-2": "not_started",
+    "MAN-3": "not_started"
+  }
+}

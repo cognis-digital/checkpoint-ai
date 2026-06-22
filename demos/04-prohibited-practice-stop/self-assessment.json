@@ -1,0 +1,21 @@
+{
+  "system_name": "civic-trust-score",
+  "owner": "Strategy Office (proposed)",
+  "purpose": "Proposed system to assign citizens a general-purpose trustworthiness score from unrelated behavioral data and use it to grant or deny access to services.",
+  "deployment_context": "external",
+  "eu_use_cases": ["social_scoring", "realtime_biometric_id"],
+  "responses": {
+    "GOV-1": "verified",
+    "GOV-2": "verified",
+    "GOV-3": "verified",
+    "MAP-1": "verified",
+    "MAP-2": "verified",
+    "MAP-3": "verified",
+    "MEA-1": "verified",
+    "MEA-2": "verified",
+    "MEA-3": "verified",
+    "MAN-1": "verified",
+    "MAN-2": "verified",
+    "MAN-3": "verified"
+  }
+}

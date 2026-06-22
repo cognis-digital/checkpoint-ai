@@ -1,0 +1,21 @@
+{
+  "system_name": "thirdparty-summarizer-saas",
+  "owner": "Procurement & Vendor Risk, Security",
+  "purpose": "Third-party SaaS that summarizes internal documents. We do not control training data or model internals; assessment reflects what the vendor attests plus our wrapper controls.",
+  "deployment_context": "external",
+  "eu_use_cases": ["content_generation"],
+  "responses": {
+    "GOV-1": "implemented",
+    "GOV-2": "implemented",
+    "GOV-3": "partial",
+    "MAP-1": "implemented",
+    "MAP-2": "partial",
+    "MAP-3": "not_started",
+    "MEA-1": "partial",
+    "MEA-2": "not_started",
+    "MEA-3": "planned",
+    "MAN-1": "implemented",
+    "MAN-2": "partial",
+    "MAN-3": "implemented"
+  }
+}

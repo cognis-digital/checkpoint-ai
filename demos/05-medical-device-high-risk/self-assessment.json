@@ -1,0 +1,21 @@
+{
+  "system_name": "retinascan-triage",
+  "owner": "Clinical AI, Quality & Regulatory Affairs",
+  "purpose": "Flags retinal images suggestive of diabetic retinopathy to prioritize ophthalmologist review. Decision support only; a clinician makes the diagnosis.",
+  "deployment_context": "external",
+  "eu_use_cases": ["medical_device"],
+  "responses": {
+    "GOV-1": "verified",
+    "GOV-2": "verified",
+    "GOV-3": "implemented",
+    "MAP-1": "verified",
+    "MAP-2": "verified",
+    "MAP-3": "verified",
+    "MEA-1": "verified",
+    "MEA-2": "implemented",
+    "MEA-3": "implemented",
+    "MAN-1": "verified",
+    "MAN-2": "verified",
+    "MAN-3": "verified"
+  }
+}

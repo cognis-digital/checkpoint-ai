@@ -40,10 +40,43 @@ checkpoint-ai scan .            # → prioritized findings in seconds
    ```bash
    checkpoint-ai ssp assessment.json > ssp.json
    ```
-5. **Automate in CI** — regenerate the catalog/SSP on each governance change:
+5. **Export findings** in the format your dashboard speaks. Each open control gap
+   is a finding; `assess` can emit it as a table, JSON, **SARIF 2.1.0**, or **CSV**:
    ```bash
-   checkpoint-ai assess assessment.json && checkpoint-ai ssp assessment.json > ssp.json
+   checkpoint-ai --format sarif assess assessment.json > checkpoint.sarif.json   # code-scanning dashboards
+   checkpoint-ai --format csv   assess assessment.json > gaps.csv                 # spreadsheets / GRC trackers
    ```
+   The SARIF log carries one rule per control and one result per gap, each tagged
+   with a `security-severity` and the NIST AI RMF / EU AI Act / ISO 42001 crosswalk.
+6. **Automate in CI** — gate the build and publish findings on each governance change:
+   ```bash
+   checkpoint-ai assess assessment.json   # non-zero exit on an unaddressed weight-5 gap
+   checkpoint-ai --format sarif assess assessment.json > checkpoint.sarif.json   # upload to code scanning
+   ```
+
+## Demos — real-world scenarios
+
+Each folder under [`demos/`](demos/) is a self-contained scenario: a realistic
+assessment file in the tool's input format plus a `SCENARIO.md` describing where
+the data came from, what to expect, the exact run command, and how to act.
+
+| Demo | Scenario | EU tier | Outcome |
+|------|----------|---------|---------|
+| [`01-pre-launch-gap-analysis`](demos/01-pre-launch-gap-analysis/) | Support copilot six weeks from launch | limited | weight-5 gaps → CI fails |
+| [`02-iso-42001-readiness`](demos/02-iso-42001-readiness/) | AIMS one control from a stage-1 audit | limited | single open gap |
+| [`03-eu-ai-act-high-risk`](demos/03-eu-ai-act-high-risk/) | Hiring system conformity prep (Annex III) | high | bias-testing gap blocks CE mark |
+| [`04-prohibited-practice-stop`](demos/04-prohibited-practice-stop/) | Citizen social-scoring proposal | unacceptable | perfect posture, still a hard stop |
+| [`05-medical-device-high-risk`](demos/05-medical-device-high-risk/) | Retinal-screening triage that passes | high | clean — the target state |
+| [`06-internal-analytics-minimal`](demos/06-internal-analytics-minimal/) | Internal anomaly flagger | minimal | gaps, but exit 0 (right-sized) |
+| [`07-greenfield-baseline`](demos/07-greenfield-baseline/) | Day-zero assessment, nothing built | limited | 0/100, full POA&M backlog |
+| [`08-na-scoping`](demos/08-na-scoping/) | OCR digitizer scoping controls out | minimal | `not_applicable` handling |
+| [`09-ci-sarif-gate`](demos/09-ci-sarif-gate/) | Credit adjudicator wired into CI | high | exit-code gate + SARIF upload |
+| [`10-vendor-model-intake`](demos/10-vendor-model-intake/) | Third-party SaaS due diligence | limited | gaps → vendor questionnaire |
+
+```bash
+checkpoint-ai assess demos/09-ci-sarif-gate/self-assessment.json
+checkpoint-ai --format sarif assess demos/09-ci-sarif-gate/self-assessment.json > checkpoint.sarif.json
+```
 
 ## Contents
 
@@ -61,11 +94,13 @@ NIST AI RMF / EU AI Act / ISO 42001 self-assessment & SSP generator — without 
 <a name="features"></a>
 ## Features
 
-- ✅ Classify Eu Risk Tier
-- ✅ Assess
-- ✅ Load Assessment
-- ✅ Load Assessment Dict
-- ✅ Generate Ssp
+- ✅ Cross-walked control catalog: NIST AI RMF · EU AI Act · ISO/IEC 42001
+- ✅ Weighted posture scoring, maturity bands, and per-function breakdown
+- ✅ EU AI Act risk-tier classification (minimal / limited / high / unacceptable)
+- ✅ Gap analysis with prioritized remediation (OSCAL-flavored SSP + POA&M)
+- ✅ Export findings as **table · JSON · SARIF 2.1.0 · CSV**
+- ✅ CI gate: non-zero exit on an unaddressed high-weight gap
+- ✅ 10 real-world demo scenarios in [`demos/`](demos/)
 - ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
 - ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
 
@@ -77,9 +112,11 @@ NIST AI RMF / EU AI Act / ISO 42001 self-assessment & SSP generator — without 
 ```bash
 pip install cognis-checkpoint-ai
 checkpoint-ai --version
-checkpoint-ai scan .                       # scan current project
-checkpoint-ai scan . --format json         # machine-readable
-checkpoint-ai scan . --fail-on high        # CI gate (non-zero exit)
+checkpoint-ai catalog                                            # list the cross-walked controls
+checkpoint-ai assess assessment.json                             # score; non-zero exit on a high-weight gap
+checkpoint-ai --format json  assess assessment.json              # machine-readable
+checkpoint-ai --format sarif assess assessment.json              # SARIF 2.1.0 for code-scanning
+checkpoint-ai ssp assessment.json > ssp.json                     # OSCAL-flavored SSP + POA&M
 ```
 
 <div align="right"><a href="#top">↑ back to top</a></div>
@@ -88,11 +125,24 @@ checkpoint-ai scan . --fail-on high        # CI gate (non-zero exit)
 ## Example
 
 ```text
-$ checkpoint-ai scan .
-  [HIGH    ] CHE-001  example finding             (./src/app.py)
-  [MEDIUM  ] CHE-002  another signal              (./config.yaml)
-
-  2 findings · risk score 5 · 38ms
+$ checkpoint-ai assess demos/03-eu-ai-act-high-risk/self-assessment.json
+CHECKPOINT-AI assessment: sentinel-resume-screener
+  owner            : People Operations, Responsible AI Office
+  EU AI Act tier   : high
+  overall posture  : 72.8/100 (Defined)
+  function scores  :
+    GOVERN   : 91.2/100
+    MANAGE   : 74.2/100
+    MAP      : 76.2/100
+    MEASURE  : 51.2/100
+  framework cover  :
+    nist_ai_rmf : 66.7%
+    eu_ai_act   : 66.7%
+    iso_42001   : 66.7%
+  ...
+  open gaps        : MAP-3, MEA-2, MEA-3, MAN-2
+$ echo $?
+2   # weight-5 gaps (MAP-3, MEA-2) remain — CI gate fails
 ```
 
 <div align="right"><a href="#top">↑ back to top</a></div>

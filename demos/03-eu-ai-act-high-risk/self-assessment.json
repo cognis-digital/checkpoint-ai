@@ -1,11 +1,21 @@
 {
-  "CP-GOV-1.1": "yes",
-  "CP-GOV-1.2": "yes",
-  "CP-MAP-2.1": "yes",
-  "CP-MAP-2.2": "yes",
-  "CP-MEAS-3.1": "yes",
-  "CP-MEAS-3.2": "yes",
-  "CP-MGMT-4.1": "yes",
-  "CP-MGMT-4.2": "yes",
-  "CP-EUAI-IX": "in progress"
+  "system_name": "sentinel-resume-screener",
+  "owner": "People Operations, Responsible AI Office",
+  "purpose": "Ranks and shortlists job applicants for recruiter review. Used to triage high-volume requisitions.",
+  "deployment_context": "external",
+  "eu_use_cases": ["employment_screening", "biometric_id"],
+  "responses": {
+    "GOV-1": "verified",
+    "GOV-2": "implemented",
+    "GOV-3": "implemented",
+    "MAP-1": "verified",
+    "MAP-2": "implemented",
+    "MAP-3": "partial",
+    "MEA-1": "implemented",
+    "MEA-2": "planned",
+    "MEA-3": "partial",
+    "MAN-1": "implemented",
+    "MAN-2": "partial",
+    "MAN-3": "implemented"
+  }
 }

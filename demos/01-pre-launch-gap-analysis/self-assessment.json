@@ -1,11 +1,21 @@
 {
-  "CP-GOV-1.1": "yes",
-  "CP-GOV-1.2": "in progress",
-  "CP-MAP-2.1": "yes",
-  "CP-MAP-2.2": "no",
-  "CP-MEAS-3.1": "no",
-  "CP-MEAS-3.2": "no",
-  "CP-MGMT-4.1": "no",
-  "CP-MGMT-4.2": "no",
-  "CP-EUAI-IX": "no"
+  "system_name": "atlas-support-copilot",
+  "owner": "Customer Experience, AI Platform Team",
+  "purpose": "Customer-facing support chatbot that drafts replies and suggests knowledge-base articles for human agents to review before sending.",
+  "deployment_context": "external",
+  "eu_use_cases": ["chatbot", "content_generation"],
+  "responses": {
+    "GOV-1": "implemented",
+    "GOV-2": "partial",
+    "GOV-3": "planned",
+    "MAP-1": "implemented",
+    "MAP-2": "partial",
+    "MAP-3": "not_started",
+    "MEA-1": "partial",
+    "MEA-2": "not_started",
+    "MEA-3": "not_started",
+    "MAN-1": "implemented",
+    "MAN-2": "planned",
+    "MAN-3": "partial"
+  }
 }

@@ -13,6 +13,8 @@ from .core import (
     assess,
     generate_ssp,
     load_assessment,
+    to_csv,
+    to_sarif,
 )
 
 
@@ -52,6 +54,10 @@ def _cmd_assess(args) -> int:
     result = assess(assessment)
     if args.format == "json":
         print(json.dumps(result.to_dict(), indent=2))
+    elif args.format == "sarif":
+        print(json.dumps(to_sarif(result), indent=2))
+    elif args.format == "csv":
+        sys.stdout.write(to_csv(result))
     else:
         _print_table(result)
     # Non-zero exit when high-priority (weight>=5) gaps remain unaddressed.
@@ -87,7 +93,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--version", action="version", version=f"{TOOL_NAME} {TOOL_VERSION}")
     parser.add_argument(
-        "--format", choices=["table", "json"], default="table", help="output format"
+        "--format",
+        choices=["table", "json", "sarif", "csv"],
+        default="table",
+        help="output format (sarif/csv apply to the 'assess' command)",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
