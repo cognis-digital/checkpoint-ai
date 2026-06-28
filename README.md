@@ -20,6 +20,72 @@ pip install cognis-checkpoint-ai
 checkpoint-ai scan .            # → prioritized findings in seconds
 ```
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ checkpoint-ai-emit --version
+CHECKPOINT-AI 0.1.0
+```
+
+```console
+$ checkpoint-ai-emit --help
+usage: checkpoint-ai [-h] [--version] [--format {table,json,sarif,csv}]
+                     {catalog,assess,ssp} ...
+
+CHECKPOINT-AI: NIST AI RMF / EU AI Act / ISO 42001 self-assessment & SSP
+generator.
+
+positional arguments:
+  {catalog,assess,ssp}
+    catalog             list the cross-walked control catalog
+    assess              score a self-assessment JSON file
+    ssp                 generate an OSCAL-flavored SSP from an assessment
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json,sarif,csv}
+                        output format (sarif/csv apply to the 'assess'
+                        command)
+```
+
+```console
+$ checkpoint-ai-emit catalog
+CHECKPOINT-AI control catalog (12 controls)
+  GOV-1  (w5) GOVERN   AI governance policy & accountability owner
+         nist_ai_rmf=GOVERN 1.1 eu_ai_act=Art.17 iso_42001=5.2
+  GOV-2  (w4) GOVERN   Risk tolerance & escalation thresholds defined
+         nist_ai_rmf=GOVERN 1.3 eu_ai_act=Art.9 iso_42001=6.1
+  GOV-3  (w3) GOVERN   Workforce AI competency & training
+         nist_ai_rmf=GOVERN 2.2 eu_ai_act=Art.4 iso_42001=7.2
+  MAP-1  (w4) MAP      Intended purpose & context of use documented
+         nist_ai_rmf=MAP 1.1 eu_ai_act=Art.11 iso_42001=8.1
+  MAP-2  (w4) MAP      Foreseeable misuse & impacted populations identified
+         nist_ai_rmf=MAP 3.1 eu_ai_act=Art.9 iso_42001=6.1.2
+  MAP-3  (w5) MAP      Data provenance & lawful basis recorded
+         nist_ai_rmf=MAP 2.3 eu_ai_act=Art.10 iso_42001=7.4
+  MEA-1  (w4) MEASURE  Performance & accuracy metrics evaluated
+         nist_ai_rmf=MEASURE 2.3 eu_ai_act=Art.15 iso_42001=9.1
+  MEA-2  (w5) MEASURE  Bias / fairness testing across subgroups
+         nist_ai_rmf=MEASURE 2.11 eu_ai_act=Art.10 iso_42001=9.1
+  MEA-3  (w4) MEASURE  Adversarial robustness & security testing
+         nist_ai_rmf=MEASURE 2.7 eu_ai_act=Art.15 iso_42001=8.3
+  MAN-1  (w5) MANAGE   Human oversight & intervention controls
+         nist_ai_rmf=MANAGE 1.1 eu_ai_act=Art.14 iso_42001=8.4
+  MAN-2  (w4) MANAGE   Incident response & post-market monitoring
+         nist_ai_rmf=MANAGE 4.1 eu_ai_act=Art.72 iso_42001=10.1
+  MAN-3  (w4) MANAGE   Logging & traceability of system decisions
+         nist_ai_rmf=MANAGE 2.2 eu_ai_act=Art.12 iso_42001=8.5
+```
+
+> Blocks above are real `checkpoint-ai` output — reproduce them from a clone.
+
+<!-- cognis:example:end -->
+
 ## Usage — step by step
 
 `checkpoint-ai` runs an AI-governance self-assessment cross-walked across NIST AI RMF, the EU AI Act, and ISO 42001, and can emit an OSCAL-flavored SSP.

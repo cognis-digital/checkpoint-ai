@@ -1,0 +1,20 @@
+$ checkpoint-ai-emit --help
+
+usage: checkpoint-ai [-h] [--version] [--format {table,json,sarif,csv}]
+                     {catalog,assess,ssp} ...
+
+CHECKPOINT-AI: NIST AI RMF / EU AI Act / ISO 42001 self-assessment & SSP
+generator.
+
+positional arguments:
+  {catalog,assess,ssp}
+    catalog             list the cross-walked control catalog
+    assess              score a self-assessment JSON file
+    ssp                 generate an OSCAL-flavored SSP from an assessment
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json,sarif,csv}
+                        output format (sarif/csv apply to the 'assess'
+                        command)

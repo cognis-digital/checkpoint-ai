@@ -1,0 +1,3 @@
+$ checkpoint-ai-emit --version
+
+CHECKPOINT-AI 0.1.0
